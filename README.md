@@ -37,4 +37,28 @@
                         finish();
                         Log.d("lylog", "No get permission");
                     }
-                })
+                });  
+                
+### 封装工具类
+
+    public class PermissionCheckUtil {
+         private static Boolean isOk = false;
+
+         @SuppressLint("CheckResult")
+         public static boolean  checkIsGanted(Activity activity,String... permissions) {
+            final RxPermissions rxPermissions = new RxPermissions((FragmentActivity) activity);
+            rxPermissions
+                        .request(permissions)
+                        .subscribe(granted -> isOk=granted);
+            return isOk;
+         }
+
+         @SuppressLint("CheckResult")
+         public static boolean  checkIsGanted(Fragment fragment, String... permissions) {
+            final RxPermissions rxPermissions = new RxPermissions(fragment);
+            rxPermissions
+                        .request(permissions)
+                        .subscribe(granted -> isOk=granted);
+            return isOk;
+         }
+     }
